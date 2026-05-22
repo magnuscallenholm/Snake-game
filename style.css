@@ -1,22 +1,61 @@
+:root {
+  --page-bg: #111827;
+  --board-bg: #0f172a;
+  --snake-color: #99e99c;
+  --snake-border: #1f2937;
+  --food-color: #ef4444;
+  --text-color: #f9fafb;
+  --button-bg: #99e99c;
+  --button-hover: #7ddf82;
+  --box-shadow-gameBoard: rgba(153, 233, 156, 0.35);
+  --scoreText-shadow: rgba(153, 233, 156, 0.5);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(circle at top, #1f2937, transparent 35%),
+    linear-gradient(135deg, #020617, #111827);
+  color: var(--text-color);
+}
+
 #gameContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
   text-align: center;
 }
 
 #gameBoard {
-  border: 3px solid;
+  border: 4px solid #99e99c;
+  border-radius: 12px;
+  box-shadow: 0 0 30px var(--box-shadow-gameBoard);
 }
 
 #scoreText {
   font-family: "Permanent Marker", cursive;
   font-size: 100px;
+  color: var(--text-color);
+  text-shadow: 0 0 12px var(--scoreText-shadow);
 }
 
 #resetBtn {
   font-family: "Permanent Marker", cursive;
   font-size: 22px;
-  width: 100px;
+  width: 120px;
   height: 50px;
-  border: 4px solid;
+  border: none;
   border-radius: 15px;
   cursor: pointer;
+  background-color: var(--button-bg);
+}
+
+#resetBtn:hover {
+  transform: translateY(4px);
+  background-color: var(--button-hover);
+  box-shadow: 0 0 15px var(--box-shadow-gameBoard);
 }
