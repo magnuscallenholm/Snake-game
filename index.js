@@ -5,6 +5,8 @@ const resetBtn = document.querySelector("#resetBtn");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
 const styles = getComputedStyle(document.documentElement);
+const foodImage = new Image();
+foodImage.src = "images/apple.png";
 
 const boardBackground = styles.getPropertyValue("--board-bg").trim();
 const snakeColor = styles.getPropertyValue("--snake-color").trim();
@@ -46,7 +48,7 @@ function nextTick() {
       drawSnake();
       checkGameOver();
       nextTick();
-    }, 75);
+    }, 150);
   } else {
     displayGameOver();
   }
@@ -65,8 +67,7 @@ function createFood() {
   foodY = randomFood(0, gameHeight - unitSize);
 }
 function drawFood() {
-  ctx.fillStyle = foodColor;
-  ctx.fillRect(foodX, foodY, unitSize, unitSize);
+  ctx.drawImage(foodImage, foodX, foodY, unitSize, unitSize);
 }
 function moveSnake() {
   const head = { x: snake[0].x + xVelocity, y: snake[0].y + yVelocity };
@@ -81,12 +82,31 @@ function moveSnake() {
     snake.pop();
   }
 }
+function drawRoundedRect(x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.roundRect(x, y, width, height, radius);
+  ctx.fill();
+  ctx.stroke();
+}
+
 function drawSnake() {
-  ctx.fillStyle = snakeColor;
-  ctx.strokeStyle = snakeBorder;
-  snake.forEach((snakePart) => {
-    ctx.fillRect(snakePart.x, snakePart.y, unitSize, unitSize);
-    ctx.strokeRect(snakePart.x, snakePart.y, unitSize, unitSize);
+  snake.forEach((snakePart, index) => {
+    ctx.fillStyle = index === 0 ? "#4ade80" : "#86efac";
+    ctx.strokeStyle = snakeBorder;
+
+    drawRoundedRect(snakePart.x, snakePart.y, unitSize, unitSize, 8);
+
+    if (index === 0) {
+      ctx.fillStyle = "black";
+
+      ctx.beginPath();
+      ctx.arc(snakePart.x + 8, snakePart.y + 8, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(snakePart.x + 17, snakePart.y + 8, 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
   });
 }
 function changeDirection(event) {
@@ -142,8 +162,8 @@ function checkGameOver() {
   }
 }
 function displayGameOver() {
-  ctx.font = "50px MV Boli";
-  ctx.fillStyle = "black";
+  ctx.font = "50px Luckiest Guy";
+  ctx.fillStyle = "#f9fafb";
   ctx.textAlign = "center";
   ctx.fillText("GAME OVER!", gameWidth / 2, gameHeight / 2);
   running = false;
